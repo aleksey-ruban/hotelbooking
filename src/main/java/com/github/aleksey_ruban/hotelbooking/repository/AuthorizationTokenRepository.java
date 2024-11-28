@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthorizationTokenRepository extends JpaRepository<AuthorizationToken, Long> {
     @Query("SELECT t FROM AuthorizationToken t WHERE t.client.phoneNumber = :clientPhoneNumber")
-    AuthorizationToken findByClientPhoneNumber(@Param("clientPhoneNumber") Long clientPhoneNumber);
+    AuthorizationToken findByClientPhoneNumber(@Param("clientPhoneNumber") String clientPhoneNumber);
 }

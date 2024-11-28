@@ -20,7 +20,7 @@ public class RoomPhoto {
     private String photoPath;
 
     @Column(nullable = false)
-    private Integer output_order;
+    private Integer outputOrder;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "extended_room_configuration_id", referencedColumnName = "id", nullable = false)

@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface ExtendedRoomConfigurationRepository extends JpaRepository<ExtendedRoomConfiguration, Long> {
-    @Query("SELECT c FROM ExtendedRoomConfiguration c WHERE c.isOnMain=True ORDER BY c.BaseRoomConfiguration.baseCoast ASC")
+    @Query("SELECT c FROM ExtendedRoomConfiguration c WHERE c.isOnMain=true ORDER BY c.baseRoomConfiguration.baseCoast ASC")
     List<ExtendedRoomConfiguration> findAllMainPage();
 
-    @Query("SELECT c FROM ExtendedRoomConfiguration c ORDER BY c.BaseRoomConfiguration.baseCoast ASC")
+    @Query("SELECT c FROM ExtendedRoomConfiguration c ORDER BY c.baseRoomConfiguration.baseCoast ASC")
     List<ExtendedRoomConfiguration> findAllOrderByBaseCoast();
 }

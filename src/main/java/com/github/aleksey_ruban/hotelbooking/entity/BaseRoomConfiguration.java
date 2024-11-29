@@ -24,7 +24,7 @@ public class BaseRoomConfiguration {
     @Column(nullable = false)
     private String cardDescription;
 
-    @Column(nullable = false)
+    @Column(length = 800, nullable = false)
     private String fullDescription;
 
     @Column(nullable = false)

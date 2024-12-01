@@ -7,8 +7,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -31,8 +33,20 @@ public class BookingPagesController {
         return "booking/rooms";
     }
 
-    @GetMapping({"/room-details", "/room-details/"})
-    public String roomDetails(Model model) {
+    @GetMapping({"/room-details", "/room-details/", "/room-details/{id}", "/room-details/{id}/"})
+    public String roomDetails(@PathVariable(required = false) Long id, Model model) {
+        if (id == null) {
+            return "redirect:/rooms";
+        }
+
+        Optional<ExtendedRoomConfiguration> optionalExtendedRoomConfiguration = extendedRoomConfigurationService.findById(id);
+        if (optionalExtendedRoomConfiguration.isEmpty()) {
+            return "redirect:/rooms";
+        }
+
+        ExtendedRoomConfiguration exitstingConfiguration = optionalExtendedRoomConfiguration.get();
+        model.addAttribute("detailedRoomConfiguration", exitstingConfiguration);
+
         List<ExtendedRoomConfiguration> onMainPageCards = extendedRoomConfigurationService.findAllMainPage();
         List<List<ExtendedRoomConfiguration>> groupedConfigurations = ListHelper.partitionList(onMainPageCards, 3);
         model.addAttribute("extendedRoomConfigurations", groupedConfigurations);

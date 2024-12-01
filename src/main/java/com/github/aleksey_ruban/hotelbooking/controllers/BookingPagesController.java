@@ -3,13 +3,22 @@ package com.github.aleksey_ruban.hotelbooking.controllers;
 import com.github.aleksey_ruban.hotelbooking.entity.ExtendedRoomConfiguration;
 import com.github.aleksey_ruban.hotelbooking.helpers.ListHelper;
 import com.github.aleksey_ruban.hotelbooking.service.ExtendedRoomConfigurationService;
+import jakarta.servlet.ServletContext;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -17,6 +26,10 @@ import java.util.Optional;
 public class BookingPagesController {
 
     private final ExtendedRoomConfigurationService extendedRoomConfigurationService;
+
+    private final SpringTemplateEngine templateEngine;
+
+    private ServletContext servletContext;
 
     @GetMapping({"/", "home", "/home/"})
     public String index(Model model) {
@@ -55,8 +68,63 @@ public class BookingPagesController {
 
     @GetMapping({"/booking", "/booking/"})
     public String booking(Model model) {
-        List<ExtendedRoomConfiguration> onMainPageCards = extendedRoomConfigurationService.finsAllOrderByCoast();
-        model.addAttribute("extendedRoomConfigurations", onMainPageCards);
+        List<ExtendedRoomConfiguration> allRoomCards = extendedRoomConfigurationService.finsAllOrderByCoast();
+        model.addAttribute("extendedRoomConfigurations", allRoomCards);
         return "booking/booking";
+    }
+
+    @PostMapping("/render-available-rooms")
+    public ResponseEntity<String> renderAvailableRooms(@RequestBody Map<String, Object> requestData) {
+        Context context = new Context();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+        String startDateString = (String) requestData.get("startDate");
+        String endDateString = (String) requestData.get("endDate");
+        Integer peopleCount = Integer.parseInt((String) requestData.get("peopleCount"));
+
+        LocalDate startDate = LocalDate.parse(startDateString, formatter);
+        LocalDate endDate = LocalDate.parse(endDateString, formatter);
+
+        List<ExtendedRoomConfiguration> allRoomCards = extendedRoomConfigurationService.finsAllOrderByCoast();
+
+        context.setVariable("extendedRoomConfigurations", allRoomCards);
+
+        String renderedHtml = templateEngine.process("includes/booking-select-room-panel", context);
+
+        return ResponseEntity.ok(renderedHtml);
+    }
+
+    @PostMapping("/render-booking-details")
+    public ResponseEntity<String> renderBookingDetails(@RequestBody Map<String, Object> requestData) {
+        Context context = new Context();
+
+        Long roomId = Long.parseLong((String) requestData.get("roomId"));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+        String startDateString = (String) requestData.get("startDate");
+        String endDateString = (String) requestData.get("endDate");
+        Integer peopleCount = Integer.parseInt((String) requestData.get("peopleCount"));
+
+        LocalDate startDate = LocalDate.parse(startDateString, formatter);
+        LocalDate endDate = LocalDate.parse(endDateString, formatter);
+
+        Optional<ExtendedRoomConfiguration> configuration = extendedRoomConfigurationService.findById(roomId);
+        if (configuration.isEmpty()) {
+            return ResponseEntity.badRequest().body("Указанного номера не существует");
+        }
+
+        formatter = DateTimeFormatter.ofPattern("d MMMM");
+        String bookingDates = startDate.format(formatter) + " – " +
+                endDate.format(formatter) + ", " + startDate.getYear();
+
+        context.setVariable("roomConfig", configuration.get());
+        context.setVariable("peopleCount", peopleCount);
+        context.setVariable("bookingDates", bookingDates);
+        context.setVariable("totalCoast", 15800);
+
+        String renderedHtml = templateEngine.process("includes/booking-confirm-panel", context);
+
+        return ResponseEntity.ok(renderedHtml);
     }
 }

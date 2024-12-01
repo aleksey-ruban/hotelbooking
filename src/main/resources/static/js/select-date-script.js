@@ -145,9 +145,7 @@ function selectDate(event) {
         button.innerHTML += finalStartDate.getDate() + " " + months[finalStartDate.getMonth()] + " – " + finalEndDate.getDate() + " " + months[finalEndDate.getMonth()] + ", " + finalStartDate.getFullYear();
         configureCalendar(true);
         const myModalEl = document.getElementById("dateModal");
-        var modal = bootstrap.Modal.getInstance(myModalEl);
-        modal.hide();
-        document.querySelector(".modal-backdrop").remove();
+        myModalEl.querySelector(".btn-close").click();
     }
 }
 
@@ -191,13 +189,13 @@ function selectPeopleCount(event) {
             selectedCounts[i].classList.remove("people-count-item-selected");
         }
     target.classList.add("people-count-item-selected")
-    const myModalEl = document.getElementById("peopleModal");
-    var modal = bootstrap.Modal.getInstance(myModalEl);
-    modal.hide();
-    document.querySelector(".modal-backdrop").remove();
+
     var button = document.querySelector('#people-button-value');
     button.innerHTML = '<span class="d-block text-body-secondary">Гости</span>';
     button.innerHTML += target.innerHTML;
+
+    const myModalEl = document.getElementById("peopleModal");
+    myModalEl.querySelector(".btn-close").click();
 }
 
 function initDates() {

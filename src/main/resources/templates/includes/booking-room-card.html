@@ -5,16 +5,16 @@
         <a href="#" class="h5 card-title text-primary text-decoration-none mx-1" th:text="${roomConfig.bookingName}">Стандарт</a>
         <div class="d-flex flex-row justify-content-between">
             <div class="col d-flex align-items-center justify-content-center">
-                <img src="images/room_details/audience.png" class="room-detail-icon me-2">
+                <img src="/static/images/room_details/audience.png" class="room-detail-icon me-2">
                 <span th:text="${'до ' + roomConfig.baseRoomConfiguration.maxGuests + ' мест'}">до 3 мест</span>
             </div>
             
             <div class="col d-flex align-items-center justify-content-center">
-                <img src="images/room_details/wide.png" class="room-detail-icon me-2">
+                <img src="/static/images/room_details/wide.png" class="room-detail-icon me-2">
                 <span th:text="${roomConfig.baseRoomConfiguration.area} + ' м'">21 м</span><sup>2</sup>
             </div>
             <div class="col d-flex align-items-center justify-content-center">
-                <img src="images/room_details/blueprint.png" class="room-detail-icon me-2">
+                <img src="/static/images/room_details/blueprint.png" class="room-detail-icon me-2">
                 <span th:text="${roomConfig.baseRoomConfiguration.rooms} + ' комн.'">2 комн.</span>
             </div>
             <style>

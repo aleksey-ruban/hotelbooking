@@ -12,7 +12,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-8">
                     <h1 class="signup-header text-center mb-4">Создайте свой аккаунт</h1>
-                    <form action="/registration" method="post" class="signup-form">
+                    <form action="/signup" method="post" class="signup-form">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="name" name="name" required placeholder="Введите имя">
                             <label for="name">Имя</label>
@@ -21,14 +21,14 @@
                             <div class="input-group">
                                 <span class="input-group-text">+7</span>
                                 <div class="form-floating">
-                                    <input type="tel" class="form-control" id="phone" required placeholder="Номер телефона" pattern="^\d{10}$" title="Введите корректный номер телефона">
+                                    <input type="tel" class="form-control" id="phone" name="phoneNumber" required placeholder="Номер телефона" pattern="^\d{10}$" title="Введите корректный номер телефона">
                                     <label for="phone">Номер телефона</label>
                                 </div>
-                                <button class="btn btn-primary" type="button" id="button-send-code">Отправить код</button>
+                                <button class="btn btn-primary" type="button" id="button-send-code" onclick="sendPhoneCode('signup');">Отправить код</button>
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="sms-code" name="sms_code" required placeholder="SMS-код" pattern="^\d{6}$" title="Введите корректный код">
+                            <input type="text" class="form-control" id="sms-code" name="token" required placeholder="SMS-код" pattern="^\d{6}$" title="Введите корректный код">
                             <label for="sms-code">SMS-код</label>
                         </div>
                         <div class="d-grid">
@@ -42,6 +42,7 @@
                 </div>
             </div>
         </div>
+        <script src="js/send-phone-code.js"></script>
     </main>
 </body>
 </html>

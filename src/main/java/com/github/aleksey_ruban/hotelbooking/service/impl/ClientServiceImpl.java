@@ -7,6 +7,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ClientServiceImpl implements ClientService {
 
@@ -40,9 +42,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client getByPhoneNumber(String phoneNumber) {
-        return repository.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new EntityNotFoundException("Client with PhoneNumber " + phoneNumber + " not found"));
+    public Optional<Client> getByPhoneNumber(String phoneNumber) {
+        return repository.findByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public void deleteAuthorizationToken(Client client) {
+        Optional<Client> newClient = repository.findById(client.getId());
+        if (newClient.isPresent()) {
+            Client existingClient = newClient.get();
+            existingClient.setToken(null);
+            repository.save(existingClient);
+        }
     }
 
     @Override

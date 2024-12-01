@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExtendedRoomConfigurationServiceImpl implements ExtendedRoomConfigurationService {
@@ -20,9 +21,8 @@ public class ExtendedRoomConfigurationServiceImpl implements ExtendedRoomConfigu
     }
 
     @Override
-    public ExtendedRoomConfiguration findById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("ExtendedRoomConfiguration with Id " + id + " not found"));
+    public Optional<ExtendedRoomConfiguration> findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override

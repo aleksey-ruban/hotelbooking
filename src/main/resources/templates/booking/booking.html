@@ -133,7 +133,7 @@
                 </div>
             </section>
 
-            <div th:replace="~{includes/booking-select-room-panel.html}"></div>
+            <div th:replace="~{includes/booking-select-room-panel :: bookingSelectRoomFragment(${extendedRoomConfigurations})}"></div>
 
             <div th:replace="~{includes/booking-confirm-panel.html}"></div>
         </div>

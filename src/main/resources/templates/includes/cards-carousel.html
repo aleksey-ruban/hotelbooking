@@ -1,34 +1,27 @@
-<div id="carouselRoomCardsIndicators" class="carousel slide ">
+<div id="carouselRoomCardsIndicators" class="carousel slide " th:fragment="cardsCarouselFragment(extendedRoomConfigurations)">
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselRoomCardsIndicators" data-bs-slide-to="0"
-            class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselRoomCardsIndicators" data-bs-slide-to="1"
-            class="bg-dark" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselRoomCardsIndicators" data-bs-slide-to="2"
-            class="bg-dark" aria-label="Slide 3"></button>
+        <button th:each="chunk,iterStat : ${extendedRoomConfigurations}"
+                th:type="'button'"
+                th:data-bs-target="'#carouselRoomCardsIndicators'"
+                th:data-bs-slide-to="${iterStat.index}"
+                th:class="'bg-dark' + (${iterStat.index == 0 ? ' active' : ''})"
+                th:aria-current="${iterStat.index == 0 ? 'true' : null}"
+                th:aria-label="'Slide ' + (${iterStat.index + 1})">
+        </button>
     </div>
+
     <div class="carousel-inner pb-5 mx-auto " style="max-width: 89%;">
-        <div class="carousel-item active">
+        
+        <div th:each="chunk,iterStat : ${extendedRoomConfigurations}"
+             th:class="'carousel-item' + (${iterStat.index == 0 ? ' active' : ''})">
             <div class="row text-center">
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
+                <div class="col-lg-4 mb-3 d-flex align-items-stretch"
+                     th:each="roomConfig : ${chunk}">
+                    <div th:replace="~{includes/general-room-card :: generalRoomCardFragment(${roomConfig})}"></div>
+                </div>
             </div>
         </div>
-        <div class="carousel-item">
-            <div class="row text-center">
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="row text-center">
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-            </div>
-        </div>
+
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselRoomCardsIndicators"
         data-bs-slide="prev" style="max-width: 4rem;">

@@ -17,15 +17,10 @@
             </div>
 
             <div class="row text-center gy-5 gx-5">
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
-                <div th:replace="~{includes/general-room-card.html}"></div>
+                <div class="col-lg-4 mb-3 d-flex align-items-stretch"
+                     th:each="roomConfig : ${extendedRoomConfigurations}">
+                    <div th:replace="~{includes/general-room-card :: generalRoomCardFragment(${roomConfig})}"></div>
+                </div>
             </div>
 
             <section class="pt-5 pb-1 mb-5">

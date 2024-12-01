@@ -43,7 +43,7 @@
                 </div>
                 <section class="text-center w-75 mx-auto mt-5">
                     <h2 th:text="${detailedRoomConfiguration.baseRoomConfiguration.name}">Стандарт</h2>
-                    <p th:utext="'Площадь номера: ' + ${detailedRoomConfiguration.baseRoomConfiguration.area} + '<sup>2</sup> м'">Площадь номера: 21 м<sup>2</sup></p>
+                    <p th:utext="'Площадь номера: ' + ${detailedRoomConfiguration.baseRoomConfiguration.area} + ' м<sup>2</sup>'">Площадь номера: 21 м<sup>2</sup></p>
                     <p th:utext="${detailedRoomConfiguration.baseRoomConfiguration.fullDescription}">
                         Современный номер первой категории с двуспальной кроватью для тех, кто ценит удобство и комфорт.
                         Лаконичный дизайн, качественная отделка и профессиональное оснащение служат основой для вашего
@@ -116,7 +116,7 @@
 
                 <section class="text-center mt-3">
                     <p>от <span class="fs-4 mx-2 text-primary" th:text="${detailedRoomConfiguration.baseRoomConfiguration.baseCoast}">5200</span>рублей</p>
-                    <a href="#"
+                    <a href="/booking"
                         class="book-button bg-primary mt-3 py-3 px-4 rounded-3 text-white d-inline-block hover-bg-dark"
                         role="button"
                         style="text-decoration: none; transition: 0.3s; border: rgb(48, 113, 244, 1) solid 1px;">Забронировать

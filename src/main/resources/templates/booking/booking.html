@@ -133,11 +133,14 @@
                 </div>
             </section>
 
-            <div th:replace="~{includes/booking-select-room-panel :: bookingSelectRoomFragment(${extendedRoomConfigurations})}"></div>
-
-            <div th:replace="~{includes/booking-confirm-panel.html}"></div>
+            <div id="dynamic-block">
+                <div th:replace="~{includes/booking-select-room-panel :: bookingSelectRoomFragment(${extendedRoomConfigurations})}"></div>
+                <!-- <div th:replace="~{includes/booking-confirm-panel.html}"></div> -->
+            </div>
+            
         </div>
         <script src="/static/js/select-date-script.js"></script>
+        <script src="/static/js/booking-page-scripts.js"></script>
     </main>
 </body>
 </html>

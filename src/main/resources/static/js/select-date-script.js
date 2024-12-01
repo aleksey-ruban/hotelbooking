@@ -146,6 +146,7 @@ function selectDate(event) {
         configureCalendar(true);
         const myModalEl = document.getElementById("dateModal");
         myModalEl.querySelector(".btn-close").click();
+        selectVisitInfo();
     }
 }
 
@@ -196,6 +197,7 @@ function selectPeopleCount(event) {
 
     const myModalEl = document.getElementById("peopleModal");
     myModalEl.querySelector(".btn-close").click();
+    selectVisitInfo();
 }
 
 function initDates() {

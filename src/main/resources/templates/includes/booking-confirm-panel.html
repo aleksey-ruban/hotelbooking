@@ -1,7 +1,7 @@
 <section class="rounded-bottom-2" style="background-color: rgb(232, 233, 236);">
     <div class="row pt-1 pb-1">
         <div class="col-12" style="content: ''; position: relative;">
-            <button class="ms-5 px-3 btn btn-outline-primary" style="position: absolute; top: 12px; left: 11px; bottom: 14px;">Назад</button>
+            <button class="ms-5 px-3 btn btn-outline-primary" style="position: absolute; top: 12px; left: 11px; bottom: 14px;" onclick="selectVisitInfo();">Назад</button>
             <h3 class="mt-4 mb-2 text-center">Подробности бронирования</h3>
         </div>
         <hr class="w-75 mx-auto">
@@ -10,32 +10,38 @@
         <img src="/static/images/hotel-room.jpg" style="height: 14rem;">
         <div class="d-flex flex-column flex-grow-1 ms-4 me-4">
             <div class="d-flex flex-row justify-content-between mt-3">
-                <a href="#" class="h5 card-title text-primary text-decoration-none mx-1">Стандарт с друспальной кроватью</a>
-                <p>15 января – 28 января, 2025</p>
+                <a th:href="@{room-details/{id}(id=${roomConfig.id})}" class="h5 card-title text-primary text-decoration-none mx-1" th:text="${roomConfig.bookingName}">Стандарт с друспальной кроватью</a>
+                <p th:text="${bookingDates}">15 января – 28 января, 2025</p>
             </div>
             <div class="d-flex flex-row justify-content-between">
                 <div class="d-flex flex-row justify-content-between w-50">
                     <div class="col d-flex align-items-center justify-content-center">
                         <img src="/static/images/room_details/audience.png" class="room-detail-icon me-2">
-                        <span>до 3 мест</span>
+                        <span th:text="${'до ' + roomConfig.baseRoomConfiguration.maxGuests + ' мест'}">до 3 мест</span>
                     </div>
                     
                     <div class="col d-flex align-items-center justify-content-center">
                         <img src="/static/images/room_details/wide.png" class="room-detail-icon me-2">
-                        <span>21 м<sup>2</sup></span>
+                        <span th:text="${roomConfig.baseRoomConfiguration.area} + ' м'">21 м</span><sup>2</sup>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
                         <img src="/static/images/room_details/blueprint.png" class="room-detail-icon me-2">
-                        <span>2 комн.</span>
+                        <span th:text="${roomConfig.baseRoomConfiguration.rooms} + ' комн.'">2 комн.</span>
                     </div>
                     
                 </div>
-                <p class="mb-0">2 человека</p>
+                <p class="mb-0" th:text="${peopleCount} == 1 ? ${peopleCount} + ' человек' : ${peopleCount} + ' человека'">2 человека</p>
             </div>
             <div class="d-flex flex-row justify-content-between mt-auto ms-2 align-items-center mb-3">
-                <h5 class="card-title text-primary mb-0">Итого: 13000₽</h5>
+                <h5 class="card-title text-primary mb-0" th:text="'Итого: ' + ${totalCoast} + '₽'">Итого: 13000₽</h5>
                 <button class="btn btn-dark mt-auto align-self-center px-5">Забронировать</button>
             </div>
         </div>
     </div>
+    <style>
+        .room-detail-icon {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
 </section>

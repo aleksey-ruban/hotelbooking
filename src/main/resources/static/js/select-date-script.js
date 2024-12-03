@@ -4,8 +4,8 @@ var selectedMounth = new Date();
 var selectedDateStart = null;
 var selectedDateEnd = null;
 
-var finalStartDate = null;
-var finalEndDate = null;
+window.finalStartDate = null;
+window.finalEndDate = null;
 
 function configureCalendar(changeMounth=false) {
     var calendarGrid = document.getElementsByClassName("calendar-view")[0]
@@ -29,6 +29,7 @@ function configureCalendar(changeMounth=false) {
     }
     
     var firstCalendarDay = new Date(firstDayCurrentMounth);
+    firstCalendarDay.setHours(9, 0, 0, 0)
     firstCalendarDay.setDate(firstDayCurrentMounth.getDate() - firstDayWeekdayNumber + (firstDayWeekdayNumber === 0 ? -6 : 1));
     
     var i = 0;
@@ -46,9 +47,9 @@ function configureCalendar(changeMounth=false) {
         let copy2 = new Date(selectedDateEnd);
         let copy3 = new Date(someCalendarDay);
 
-        copy1.setHours(0, 0, 0, 0);
-        copy2.setHours(0, 0, 0, 0);
-        copy3.setHours(0, 0, 0, 0);
+        copy1.setHours(9, 0, 0, 0);
+        copy2.setHours(9, 0, 0, 0);
+        copy3.setHours(9, 0, 0, 0);
         
         if ((copy1 <= copy3 && copy3 <= copy2) || copy1.getTime() === copy3.getTime()) {
             q = " calendar-view-day-selected";
@@ -109,9 +110,8 @@ function selectDate(event) {
     var newDate = new Date(target.getAttribute("data-date"));
     if (!selectedDateStart || (selectedDateStart && selectedDateEnd)) {
         selectedDateStart = new Date(newDate);
-        var tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        if (selectedDateStart < tomorrow) {
+        var today = new Date();
+        if (selectedDateStart < today) {
             selectedDateStart = null;
             selectedDateEnd = null;
             refreshDates();
@@ -132,8 +132,8 @@ function selectDate(event) {
             configureCalendar(true);
             return;
         }
-        finalStartDate = new Date(selectedDateStart);
-        finalEndDate = new Date(selectedDateEnd);
+        window.finalStartDate = new Date(selectedDateStart);
+        window.finalEndDate = new Date(selectedDateEnd);
         var months = [
             "января", "февраля", "марта",
             "апреля", "мая", "июня",
@@ -142,7 +142,7 @@ function selectDate(event) {
         ];
         var button = document.querySelector('#date-button-value');
         button.innerHTML = '<span class="d-block text-body-secondary">Заезд – выезд</span>';
-        button.innerHTML += finalStartDate.getDate() + " " + months[finalStartDate.getMonth()] + " – " + finalEndDate.getDate() + " " + months[finalEndDate.getMonth()] + ", " + finalStartDate.getFullYear();
+        button.innerHTML += window.finalStartDate.getDate() + " " + months[window.finalStartDate.getMonth()] + " – " + window.finalEndDate.getDate() + " " + months[window.finalEndDate.getMonth()] + ", " + window.finalStartDate.getFullYear();
         configureCalendar(true);
         const myModalEl = document.getElementById("dateModal");
         myModalEl.querySelector(".btn-close").click();
@@ -178,8 +178,8 @@ function shiftDateForwardOneMonth(date) {
 }
 
 function refreshDates() {
-    selectedDateStart = new Date(finalStartDate);
-    selectedDateEnd = new Date(finalEndDate);
+    selectedDateStart = new Date(window.finalStartDate);
+    selectedDateEnd = new Date(window.finalEndDate);
     configureCalendar(true);
 }
 
@@ -206,11 +206,14 @@ function initDates() {
     today.setDate(today.getDate() + 1);
     tomorrow.setDate(tomorrow.getDate() + 2);
 
-    today.setHours(0, 0, 0, 0);
-    tomorrow.setHours(0, 0, 0, 0);
+    today.setHours(9, 0, 0, 0);
+    tomorrow.setHours(9, 0, 0, 0);
 
-    finalStartDate = new Date(today);
-    finalEndDate = new Date(tomorrow);
+    window.finalStartDate = new Date(today);
+    window.finalEndDate = new Date(tomorrow);
+
+    selectedDateStart = new Date(today);
+    selectedDateEnd = new Date(tomorrow);
 
     var months = [
         "января", "февраля", "марта",
@@ -220,7 +223,7 @@ function initDates() {
     ];
     var button = document.querySelector('#date-button-value');
     button.innerHTML = '<span class="d-block text-body-secondary">Заезд – выезд</span>';
-    button.innerHTML += finalStartDate.getDate() + " " + months[finalStartDate.getMonth()] + " – " + finalEndDate.getDate() + " " + months[finalEndDate.getMonth()] + ", " + finalStartDate.getFullYear();
+    button.innerHTML += window.finalStartDate.getDate() + " " + months[window.finalStartDate.getMonth()] + " – " + window.finalEndDate.getDate() + " " + months[window.finalEndDate.getMonth()] + ", " + window.finalStartDate.getFullYear();
 
     var button = document.querySelector('#people-button-value');
     button.innerHTML = '<span class="d-block text-body-secondary">Гости</span>';

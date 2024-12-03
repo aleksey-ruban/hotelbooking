@@ -28,11 +28,11 @@
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="sms-code" name="token" required placeholder="SMS-код" pattern="^\d{6}$" title="Введите корректный код">
+                            <input type="text" class="form-control" id="sms-code" name="token" required disabled placeholder="SMS-код" pattern="^\d{6}$" title="Введите корректный код">
                             <label for="sms-code">SMS-код</label>
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary py-2">Зарегистрироваться</button>
+                            <button type="submit" id="submit-btn" disabled class="btn btn-primary py-2">Зарегистрироваться</button>
                         </div>
                     </form>
                     <div class="already-have-account text-center mt-4">

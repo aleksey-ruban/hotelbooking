@@ -16,7 +16,11 @@ function sendPhoneCode(page) {
     })
     .then(message => {
         alert(message);
-        phoneInput.disabled = true;
+        phoneInput.setAttribute("readonly", true);
+        const smsInput = document.getElementById("sms-code");
+        smsInput.removeAttribute("disabled");
+        const submitButton = document.getElementById("submit-btn");
+        submitButton.removeAttribute("disabled");
     })
     .catch(error => {
         alert(error.message);

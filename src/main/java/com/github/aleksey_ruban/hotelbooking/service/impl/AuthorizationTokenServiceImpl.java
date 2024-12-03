@@ -6,18 +6,19 @@ import com.github.aleksey_ruban.hotelbooking.repository.AuthorizationTokenReposi
 import com.github.aleksey_ruban.hotelbooking.service.AuthorizationTokenService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorizationTokenServiceImpl implements AuthorizationTokenService {
 
     private final AuthorizationTokenRepository repository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthorizationTokenServiceImpl(AuthorizationTokenRepository repository) {
+    public AuthorizationTokenServiceImpl(AuthorizationTokenRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
-//        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -27,7 +28,7 @@ public class AuthorizationTokenServiceImpl implements AuthorizationTokenService 
                 .client(token.getClient())
                 .token(tokenValue)
                 .build();
-//        newToken.setToken(passwordEncoder.encode(token.getToken()));
+        newToken.setToken(passwordEncoder.encode(newToken.getToken()));
         return repository.save(newToken);
     }
 

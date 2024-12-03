@@ -35,3 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
+src/main/resources/static/.DS_Store
+src/main/resources/static/rooms_photo/.DS_Store

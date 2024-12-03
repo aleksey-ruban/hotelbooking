@@ -7,7 +7,9 @@
         <hr class="w-75 mx-auto">
     </div>
     <div class="d-flex flex-row mx-5 pb-4">
-        <img src="/static/images/hotel-room.jpg" style="height: 14rem;">
+        <img th:if="${roomConfig.roomPhotos.size() > 0}"
+             th:src="${roomConfig.roomPhotos.get(0).photoPath}"
+             style="height: 14rem;">
         <div class="d-flex flex-column flex-grow-1 ms-4 me-4">
             <div class="d-flex flex-row justify-content-between mt-3">
                 <a th:href="@{room-details/{id}(id=${roomConfig.id})}" class="h5 card-title text-primary text-decoration-none mx-1" th:text="${roomConfig.bookingName}">Стандарт с друспальной кроватью</a>

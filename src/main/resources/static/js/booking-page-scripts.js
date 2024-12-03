@@ -4,8 +4,8 @@ function selectVisitInfo() {
     const peopleCount = selectedPeople.getAttribute("data-people-count");
 
     var data = {
-        startDate: finalStartDate,
-        endDate: finalEndDate,
+        startDate: window.finalStartDate,
+        endDate: window.finalEndDate,
         peopleCount: peopleCount
     };
 
@@ -37,8 +37,8 @@ function selectRoom(event) {
     const peopleCount = selectedPeople.getAttribute("data-people-count");
 
     var data = {
-        startDate: finalStartDate,
-        endDate: finalEndDate,
+        startDate: window.finalStartDate,
+        endDate: window.finalEndDate,
         peopleCount: peopleCount,
         roomId: roomId
     };

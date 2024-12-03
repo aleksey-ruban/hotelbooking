@@ -1,11 +1,9 @@
 package com.github.aleksey_ruban.hotelbooking.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -25,8 +23,9 @@ public class ExtendedRoomConfiguration {
     @Column(unique = true, nullable = false)
     private String bookingName;
 
-    @OneToMany(mappedBy = "extendedRoomConfiguration", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RoomPhoto> roomPhotos;
+    @OneToMany(mappedBy = "extendedRoomConfiguration", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("outputOrder ASC")
+    private List<RoomPhoto> roomPhotos;
 
     @Column(nullable = false)
     private Boolean isOnMain;

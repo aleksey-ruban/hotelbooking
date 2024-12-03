@@ -1,12 +1,10 @@
 package com.github.aleksey_ruban.hotelbooking.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
 @AllArgsConstructor
@@ -22,7 +20,7 @@ public class RoomPhoto {
     @Column(nullable = false)
     private Integer outputOrder;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "extended_room_configuration_id", referencedColumnName = "id", nullable = false)
     private ExtendedRoomConfiguration extendedRoomConfiguration;
 }

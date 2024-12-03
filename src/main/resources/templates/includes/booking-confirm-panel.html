@@ -36,7 +36,7 @@
             </div>
             <div class="d-flex flex-row justify-content-between mt-auto ms-2 align-items-center mb-3">
                 <h5 class="card-title text-primary mb-0" th:text="'Итого: ' + ${totalCoast} + '₽'">Итого: 13000₽</h5>
-                <button class="btn btn-dark mt-auto align-self-center px-5">Забронировать</button>
+                <button class="btn btn-dark mt-auto align-self-center px-5" th:attr="data-room-id=${roomConfig.id}" onclick="bookRoom(event);">Забронировать</button>
             </div>
         </div>
     </div>

@@ -1,4 +1,17 @@
 function sendPhoneCode(page) {
+    if (localStorage.getItem("bookingChoice")) {
+        const value = localStorage.getItem("bookingChoice");
+        try {
+            const obj = JSON.parse(value);
+            if (obj && typeof obj === "object" && Object.keys(obj).length > 0) {
+                const inp = document.getElementById("bookingChoice");
+                inp.value = true;
+            }
+        } catch (e) {
+            console.log("Ошибка при парсинге сохранённого объекта букинга:", e);
+        }
+    }
+
     const phoneInput = document.getElementById("phone");
     const phoneNumber = phoneInput.value;
     fetch('/send-code', {

@@ -26,6 +26,7 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="sms-code" name="smsCode" required disabled placeholder="SMS-код" pattern="^\d{6}$" title="Введите корректный код">
                             <label for="sms-code">SMS-код</label>
+                            <input type="hidden" id="bookingChoice" name="toBooking" value="false">
                         </div>
                         <div class="d-grid">
                             <button type="submit" id="submit-btn" disabled class="btn btn-primary py-2">Войти</button>

@@ -1,6 +1,7 @@
 <div class="card" th:fragment="bookingRoomCardFragment(roomConfig)">
-    <img src="https://i.postimg.cc/28PqLLQC/dotonburi-canal-osaka-japan-700.jpg"
-        class="card-img-top" alt="Card Image">
+    <img th:if="${roomConfig.roomPhotos.size() > 0}"
+         th:src="@{${roomConfig.roomPhotos.get(0).photoPath}}"
+         class="card-img-top" alt="Card Image">
     <div class="card-body d-flex flex-column">
         <a th:href="@{room-details/{id}(id=${roomConfig.id})}" class="h5 card-title text-primary text-decoration-none mx-1" th:text="${roomConfig.bookingName}">Стандарт</a>
         <div class="d-flex flex-row justify-content-between">

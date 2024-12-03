@@ -129,6 +129,8 @@ function repairChoice(bookingChoice) {
 
     configureCalendar(true);
 
+    localStorage.removeItem('bookingChoice');
+
     selectRoom(new Event('click'), artificial=true, room=bookingChoice.roomId);
 }
 

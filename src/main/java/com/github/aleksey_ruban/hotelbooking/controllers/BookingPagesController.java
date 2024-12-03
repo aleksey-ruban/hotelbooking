@@ -6,12 +6,12 @@ import com.github.aleksey_ruban.hotelbooking.service.ExtendedRoomConfigurationSe
 import jakarta.servlet.ServletContext;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -67,9 +67,16 @@ public class BookingPagesController {
     }
 
     @GetMapping({"/booking", "/booking/"})
-    public String booking(Model model) {
+    public String booking(@RequestParam(name = "loadBooking", required = false, defaultValue = "false") boolean loadBooking, Model model) {
         List<ExtendedRoomConfiguration> allRoomCards = extendedRoomConfigurationService.finsAllOrderByCoast();
+
+        if (loadBooking) {
+            model.addAttribute("loadBooking", true);
+        }
+
         model.addAttribute("extendedRoomConfigurations", allRoomCards);
+        model.addAttribute("isAuthorized", this.isClientAuthorized());
+
         return "booking/booking";
     }
 
@@ -126,5 +133,17 @@ public class BookingPagesController {
         String renderedHtml = templateEngine.process("includes/booking-confirm-panel", context);
 
         return ResponseEntity.ok(renderedHtml);
+    }
+
+    private boolean isClientAuthorized() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            for (GrantedAuthority auth : authentication.getAuthorities()) {
+                if (auth.getAuthority().equals("CLIENT") || auth.getAuthority().equals("ADMIN")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

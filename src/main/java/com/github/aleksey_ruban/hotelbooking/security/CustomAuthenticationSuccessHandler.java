@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -21,7 +22,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private ClientService clientService;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
         String username = authentication.getName();
 
         Optional<Client> optionalClient = clientService.getByPhoneNumber(PhoneNumberHelper.normalizePhoneNumber(username));
@@ -30,6 +32,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             clientService.deleteAuthorizationToken(client);
         }
 
-        response.sendRedirect("/rooms");
+        boolean toBooking = Boolean.parseBoolean(request.getParameter("toBooking"));
+
+        if (toBooking) {
+            response.sendRedirect("/booking?loadBooking=true");
+        } else {
+            response.sendRedirect("/account");
+        }
     }
 }

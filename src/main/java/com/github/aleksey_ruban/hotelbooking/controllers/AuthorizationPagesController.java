@@ -104,7 +104,8 @@ public class AuthorizationPagesController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String create(@RequestParam String name, @RequestParam String phoneNumber,
-                         @RequestParam String token, HttpServletRequest req) {
+                         @RequestParam String token, @RequestParam Boolean toBooking,
+                         HttpServletRequest req, Model model) {
         Optional<Client> optionalClient = clientService
                 .getByPhoneNumber(PhoneNumberHelper.normalizePhoneNumber(phoneNumber));
 
@@ -129,10 +130,14 @@ public class AuthorizationPagesController {
             clientService.updateName(existingClient, name);
         } else {
 //                THROW ERROR
-            return "";
+            return "redirect:signup";
         }
 
-        return "redirect:booking";
+        if (toBooking) {
+            model.addAttribute("loadBooking", true);
+            return "redirect:/booking?loadBooking=true";
+        }
+        return "redirect:/account";
     }
 
     private boolean isClientAuthorized() {

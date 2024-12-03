@@ -37,9 +37,9 @@
                                     <h6 class="current-mounth-value d-block ms-2">Апрель</h6>
                                     <div class="change-mounth">
                                         <button class="mounth-button previous-mounth" onclick="loadPreviousMounth()"
-                                            style="background: url('images/buttons/chevron-small-left.svg');"></button>
+                                            style="background: url('/static/images/buttons/chevron-small-left.svg');"></button>
                                         <button class="mounth-button next-mounth" onclick="loadNextMounth()"
-                                            style="background: url('images/buttons/chevron-small-right.svg');"></button>
+                                            style="background: url('/static/images/buttons/chevron-small-right.svg');"></button>
                                         <style>
                                             .mounth-button {
                                                 width: 30px;
@@ -141,6 +141,12 @@
         </div>
         <script src="/static/js/select-date-script.js"></script>
         <script src="/static/js/booking-page-scripts.js"></script>
+        <script th:inline="javascript">
+            var isAuthorized = [[${isAuthorized}]];
+        </script>
+        <script th:inline="javascript">
+            var loadBooking = [[${loadBooking}]];
+        </script>
     </main>
 </body>
 </html>

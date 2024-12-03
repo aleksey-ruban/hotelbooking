@@ -1,6 +1,7 @@
 "use strict";
 
 var selectedMounth = new Date();
+selectedMounth.setDate(15);
 var selectedDateStart = null;
 var selectedDateEnd = null;
 
@@ -163,7 +164,7 @@ function getMonthDifference(startDate, endDate) {
 
 function shiftDateBackOneMonth(date) {
     // Создаём копию, чтобы не изменять оригинальную дату
-    const newDate = new Date(date);
+    const newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     // Сдвигаем месяц назад
     newDate.setMonth(newDate.getMonth() - 1);
     return newDate;
@@ -171,7 +172,7 @@ function shiftDateBackOneMonth(date) {
 
 function shiftDateForwardOneMonth(date) {
     // Создаём копию, чтобы не изменять оригинальную дату
-    const newDate = new Date(date);
+    const newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     // Сдвигаем месяц вперёд
     newDate.setMonth(newDate.getMonth() + 1);
     return newDate;
@@ -186,9 +187,9 @@ function refreshDates() {
 function selectPeopleCount(event) {
     var target = event.target;
     var selectedCounts = document.querySelectorAll(".people-count-item-selected");
-        for (var i = 0; i < selectedCounts.length; i++) {
-            selectedCounts[i].classList.remove("people-count-item-selected");
-        }
+    for (var i = 0; i < selectedCounts.length; i++) {
+        selectedCounts[i].classList.remove("people-count-item-selected");
+    }
     target.classList.add("people-count-item-selected")
 
     var button = document.querySelector('#people-button-value');

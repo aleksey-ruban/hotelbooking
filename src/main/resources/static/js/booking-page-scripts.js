@@ -74,23 +74,38 @@ function bookRoom(event) {
     const target = event.target;
     const roomId = target.getAttribute("data-room-id");
 
+    const selectedPeople = document.querySelector(".people-count-item-selected");
+    const peopleCount = selectedPeople.getAttribute("data-people-count");
+
+    var data = {
+        startDate: window.finalStartDate,
+        endDate: window.finalEndDate,
+        peopleCount: peopleCount,
+        roomId: roomId
+    };
+
     if (!isAuthorized) {
-
-        const selectedPeople = document.querySelector(".people-count-item-selected");
-        const peopleCount = selectedPeople.getAttribute("data-people-count");
-
-        var data = {
-            startDate: window.finalStartDate,
-            endDate: window.finalEndDate,
-            peopleCount: peopleCount,
-            roomId: roomId
-        };
-
         localStorage.setItem('bookingChoice', JSON.stringify(data));
-
         window.location.href = '/signup';
     } else {
-        // Create record
+        fetch('/book-room', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                alert("При бронировании возникла ошибка, попробуйте заново");
+            } else {
+                window.location.href = '/account';
+            }
+            return response.text();
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+        });
     }
 
 }

@@ -24,7 +24,7 @@
                     <div class="carousel-inner">
                         <div th:each="chunk,iterStat : ${detailedRoomConfiguration.roomPhotos}"
                              th:class="'carousel-item' + (${iterStat.index == 0 ? ' active' : ''})">
-                            <img th:src="@{${chunk.photoPath}}"
+                            <img th:src="'/static/rooms_photo_large/' + ${chunk.photoPath}"
                                  class="d-block w-100 my-5 object-fit-cover" alt="..." style="aspect-ratio: 5/3;">
                         </div>
                     </div>

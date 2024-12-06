@@ -1,0 +1,11 @@
+<div th:if="${#lists.isEmpty(bookingRecords)}">
+    <div class="alert alert-info">
+        <p>Вы ещё не сделали ни одной брони</p>
+        <a href="/booking" class="btn btn-primary">Перейти к бронированию</a>
+    </div>
+</div>
+<div th:if="${!#lists.isEmpty(bookingRecords)}">
+    <div th:each="card : ${bookingRecords}">
+        <div th:replace="~{includes/booked-card :: bookedCardFragment(${card})}"></div>
+    </div>
+</div>

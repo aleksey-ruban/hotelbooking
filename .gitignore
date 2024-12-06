@@ -37,3 +37,12 @@ out/
 .vscode/
 src/main/resources/static/.DS_Store
 src/main/resources/static/rooms_photo/.DS_Store
+src/main/resources/static/rooms_photo_small/apartment_smart/.DS_Store
+src/main/resources/static/rooms_photo_small/art/.DS_Store
+src/main/resources/static/rooms_photo_small/lux_vip/.DS_Store
+src/main/resources/static/rooms_photo_small/president_lux/.DS_Store
+src/main/resources/static/rooms_photo_small/smart/.DS_Store
+src/main/resources/static/rooms_photo_small/standard/.DS_Store
+src/main/resources/static/rooms_photo_small/standard_family/.DS_Store
+src/main/resources/static/rooms_photo_small/studio/.DS_Store
+src/main/resources/static/rooms_photo_small/studio_smart/.DS_Store

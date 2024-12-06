@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface ClientService {
     Client create(Client client);
     Client updateName(Client client, String name);
-    Client getById(Long id);
+    Optional<Client> getById(Long id);
     Optional<Client> getByPhoneNumber(String phoneNumber);
     void deleteAuthorizationToken(Client client);
     void delete(Long id);

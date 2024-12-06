@@ -33,4 +33,16 @@ public class PhoneNumberHelper {
         }
     }
 
+    public static String prettyPhoneNumber(String rawNumber) {
+        if (rawNumber == null || rawNumber.length() != 10 || !rawNumber.matches("\\d+")) {
+            throw new IllegalArgumentException("Некорректный номер телефона. Ожидается строка из 10 цифр.");
+        }
+        return String.format("+7 (%s) %s-%s-%s",
+                rawNumber.substring(0, 3),
+                rawNumber.substring(3, 6),
+                rawNumber.substring(6, 8),
+                rawNumber.substring(8)
+        );
+    }
+
 }

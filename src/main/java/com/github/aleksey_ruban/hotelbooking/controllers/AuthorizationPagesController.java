@@ -1,14 +1,18 @@
 package com.github.aleksey_ruban.hotelbooking.controllers;
 
 import com.github.aleksey_ruban.hotelbooking.entity.AuthorizationToken;
+import com.github.aleksey_ruban.hotelbooking.entity.BookingRecord;
 import com.github.aleksey_ruban.hotelbooking.entity.Client;
 import com.github.aleksey_ruban.hotelbooking.helpers.PhoneNumberHelper;
+import com.github.aleksey_ruban.hotelbooking.security.CustomUserDetails;
 import com.github.aleksey_ruban.hotelbooking.security.CustomUserDetailsService;
 import com.github.aleksey_ruban.hotelbooking.service.AuthorizationTokenService;
+import com.github.aleksey_ruban.hotelbooking.service.BookingRecordService;
 import com.github.aleksey_ruban.hotelbooking.service.ClientService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
@@ -35,6 +40,7 @@ public class AuthorizationPagesController {
 
     private final ClientService clientService;
     private final AuthorizationTokenService authorizationTokenService;
+    private final BookingRecordService bookingRecordService;
 
     private AuthenticationManager authenticationManager;
     private CustomUserDetailsService userDetailsService;
@@ -59,7 +65,48 @@ public class AuthorizationPagesController {
 
     @GetMapping({"/account", "/account/"})
     public String account(Model model) {
+        Long userId = null;
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof CustomUserDetails userDetails) {
+                userId = userDetails.getId();
+            }
+        }
+        if (userId == null) {
+            return "authorization/signin";
+        }
+        Optional<Client> client = clientService.getById(userId);
+        if (client.isEmpty()) {
+            return "authorization/signin";
+        }
+        Client client1 = client.get();
+        client1.setPhoneNumber(PhoneNumberHelper.prettyPhoneNumber(client1.getPhoneNumber()));
+        model.addAttribute("client", client1);
+
+        List<BookingRecord> bookingRecords = bookingRecordService.findByClientId(userId);
+        model.addAttribute("bookingRecords", bookingRecords);
+
         return "authorization/account";
+    }
+
+    @RequestMapping(value = {"/account", "/account/"}, method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteAccount() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof CustomUserDetails userDetails) {
+                Long userId = userDetails.getId();
+                Optional<Client> client = clientService.getById(userId);
+                if (client.isEmpty()) {
+                    return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
+                }
+                clientService.delete(userId);
+            }
+        }
+        return new ResponseEntity<>("Account deleted", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/send-code", method = RequestMethod.POST)

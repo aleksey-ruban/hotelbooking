@@ -1,0 +1,41 @@
+<div class="d-flex flex-row mt-4 mx-0 pb-4" th:fragment="bookedCardFragment(record)" style="border-bottom: rgb(200, 200, 201) solid 1px;">
+    <img th:src="'/static/rooms_photo_small/' + ${record.room.extendedRoomConfiguration.roomPhotos.get(0).photoPath}" style="height: 14rem;">
+    <div class="d-flex flex-column flex-grow-1 ms-4 me-4">
+        <div class="d-flex flex-row justify-content-between mt-3">
+            <a th:href="'/room-details/' + ${record.room.extendedRoomConfiguration.id}" class="h5 card-title text-primary text-decoration-none mx-1">Стандарт с друспальной кроватью</a>
+            <p>
+                <span th:text="${#temporals.format(record.startDate, 'd MMMM')}"></span> – 
+                <span th:text="${#temporals.format(record.endDate, 'd MMMM')}"></span>
+                <span th:text="${#temporals.format(record.startDate, ', yyyy')}"></span>
+            </p>
+        </div>
+        <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row justify-content-between w-50">
+                <div class="col d-flex align-items-center justify-content-center">
+                    <img src="/static/images/room_details/audience.png" class="room-detail-icon me-2">
+                    <span th:text="${'до ' + record.room.extendedRoomConfiguration.baseRoomConfiguration.maxGuests + ' мест'}">до 3 мест</span>
+                </div>
+                
+                <div class="col d-flex align-items-center justify-content-center">
+                    <img src="/static/images/room_details/wide.png" class="room-detail-icon me-2">
+                    <span th:text="${record.room.extendedRoomConfiguration.baseRoomConfiguration.area} + ' м'">21 м</span><sup>2</sup>
+                </div>
+                <div class="col d-flex align-items-center justify-content-center">
+                    <img src="/static/images/room_details/blueprint.png" class="room-detail-icon me-2">
+                    <span th:text="${record.room.extendedRoomConfiguration.baseRoomConfiguration.rooms} + ' комн.'">2 комн.</span>
+                </div>
+                <style>
+                    .room-detail-icon {
+                        width: 24px;
+                        height: 24px;
+                    }
+                </style>
+            </div>
+            <p class="mb-0" th:text="${record.guestsCount == 1 ? record.guestsCount + ' человек' :  record.guestsCount + ' человека'}">2 человека</p>
+        </div>
+        <div class="d-flex flex-row justify-content-between mt-auto ms-2 align-items-center mb-3">
+            <h5 class="card-title text-bg-white mb-0" th:text="'Итого: ' + ${record.totalCoast} + '₽'">Итого: 13000₽</h5>
+            <button class="btn btn-outline-danger mt-auto align-self-center px-5" th:attr="data-record-id=${record.id}" onclick="deleteRecord(event)">Отменить бронь</button>
+        </div>
+    </div>
+</div>

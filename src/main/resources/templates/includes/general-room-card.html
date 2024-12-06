@@ -1,9 +1,9 @@
 <div class="card" th:fragment="generalRoomCardFragment(roomConfig)">
     <img th:if="${roomConfig.roomPhotos.size() > 0}"
-         th:src="@{${roomConfig.roomPhotos.get(0).photoPath}}"
+         th:src="'/static/rooms_photo_small/' + ${roomConfig.roomPhotos.get(0).photoPath}"
          class="card-img-top" alt="Card Image">
     <div class="card-body d-flex flex-column">
-        <a th:href="@{/room-details/{id}(id=${roomConfig.id})}" class="card-title text-primary h5 text-decoration-none" th:text="${roomConfig.baseRoomConfiguration.name}">Стандарт</a>
+        <a th:href="'/room-details/' + ${roomConfig.id}" class="card-title text-primary h5 text-decoration-none" th:text="${roomConfig.baseRoomConfiguration.name}">Стандарт</a>
         <p class="card-text mb-2" th:text="${roomConfig.baseRoomConfiguration.cardDescription}">
             Номер повышенной комфортности с одной двуспальной или двумя
             раздельными кроватями.

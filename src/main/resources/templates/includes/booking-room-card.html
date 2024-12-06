@@ -1,6 +1,6 @@
 <div class="card" th:fragment="bookingRoomCardFragment(roomConfig)">
     <img th:if="${roomConfig.roomPhotos.size() > 0}"
-         th:src="${roomConfig.roomPhotos.get(0).photoPath}"
+         th:src="'/static/rooms_photo_small/' + ${roomConfig.roomPhotos.get(0).photoPath}"
          class="card-img-top" alt="Card Image">
     <div class="card-body d-flex flex-column">
         <a th:href="'/room-details/' + ${roomConfig.id}" class="h5 card-title text-primary text-decoration-none mx-1" th:text="${roomConfig.bookingName}">Стандарт</a>

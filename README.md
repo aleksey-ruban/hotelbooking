@@ -8,12 +8,12 @@
 
 ## Технологии
 
-- **Backend:** Java 21, Spring Boot, Spring Security
-- **Database:** PostgreSQL
-- **Frontend:** Thymeleaf, Bootstrap
-- **DevOps:** Docker, Kubernetes, Nginx
-- **Архитектура:** Monolith, MVC, Server-Side Rendering (SSR)
-- **API:** REST API для взаимодействия
+- **Backend:** `Java 21`, `Spring Boot`, `Spring Security`
+- **Database:** `PostgreSQL`
+- **Frontend:** `Thymeleaf`, `Bootstrap`
+- **DevOps:** `Docker`, `Kubernetes`, `Nginx`
+- **Архитектура:** `Monolith`, `MVC`, `Server-Side Rendering (SSR)`
+- **API:** `REST API` для взаимодействия
 
 ## Функциональность
 
